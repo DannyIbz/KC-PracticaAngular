@@ -29,7 +29,11 @@ export class ProductService {
         |   _sort=publishedDate&_order=DESC                                |
         |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
+        let ordenarLista: string = "_sort=publishedDate&_order=DESC";
 
+        return this._http
+            .get(`${this._backendUri}/products?${ordenarLista}`)
+            .map((data: Response): Product[] => Product.fromJsonToList(data.json()));
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
         | Red Path                                                         |
