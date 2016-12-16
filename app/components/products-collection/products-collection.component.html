@@ -13,6 +13,7 @@
 
         <product
             *ngFor="let product of _products"
+            (clickBoton)="notificarSeleccionProducto($event)"
             [data]="product"
             class="column">
         </product>

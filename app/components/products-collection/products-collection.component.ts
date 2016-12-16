@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import {Component, OnDestroy, OnInit, Input, Output, EventEmitter} from "@angular/core";
 import { Subject } from "rxjs/Subject";
 import "rxjs/add/operator/switchMap";
 
@@ -41,4 +41,12 @@ export class ProductsCollectionComponent implements OnDestroy, OnInit {
     | el Router de la app. La ruta a navegar es '/products', pasando   |
     | como parámetro el identificador del producto.                    |
     |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+    @Input() producto: Product[];
+
+    @Output() verDetalleProducto: EventEmitter<string> = new EventEmitter();
+
+    notificarSeleccionProducto(ruta: string): void{
+        this.verDetalleProducto.emit(`localhost/${this.producto}`);
+    }
 }
