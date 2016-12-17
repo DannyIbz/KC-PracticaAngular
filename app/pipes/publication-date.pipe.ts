@@ -19,7 +19,7 @@ import "moment/locale/es";
 })
 
 export class PublicationDatePipe implements PipeTransform {
-    transform(publishedDate: number) {
+    transform(publishedDate: number[]) {
         return moment(publishedDate).fromNow();
     }
 }
