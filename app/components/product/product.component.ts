@@ -21,10 +21,10 @@ export class ProductComponent {
     | mismo.                                                           |
     |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-    @Output() clickBoton: EventEmitter<string> = new EventEmitter();
+    @Output() clickBoton: EventEmitter<Product> = new EventEmitter<Product>();
 
      notificarClickBoton(): void {
-     console.log("click en boton");
-     this.clickBoton.emit(`localhost/${this.data}`);
+        console.log("click en boton");
+        this.clickBoton.emit(this.data);
      }
 }
