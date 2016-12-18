@@ -6,13 +6,14 @@ import "rxjs/add/operator/map";
 import { Product } from "../models/product";
 import { ProductFilter } from "../models/product-filter";
 import { BackendUri } from "../app.settings";
+import {ProductFilterComponent} from "../components/product-filter/product-filter.component";
 
 @Injectable()
 export class ProductService {
 
     constructor(
         @Inject(BackendUri) private _backendUri: string,
-        private _http: Http) { }
+                            private _http: Http) { }
 
     getProducts(filter: ProductFilter = undefined): Observable<Product[]> {
 
@@ -47,11 +48,18 @@ export class ProductService {
         |       category.id=x (siendo x el identificador de la categoría)  |
         |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-        /*let filtrarProductos: string = "_sort=category.id=category&_sort=q=name&_order=DESC";
+        let filtrarProductos: URLSearchParams = new URLSearchParams();
 
-        return this._http
-                   .get(`${this._backendUri}/products?${filtrarProductos}`)
-                   .map((data: Response): Product[] => Product.fromJsonToList(data.json()));*/
+        if (filter.text !== null) {
+            filtrarProductos.set("q", filter.text);
+        }
+        if (filter.category !== null) {
+            filtrarProductos.set("category.id", filter.category);
+        }
+        else {
+           ordenarLista;
+        }
+
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
         | Yellow Path                                                      |
@@ -67,8 +75,11 @@ export class ProductService {
         |       state=x (siendo x el estado)                               |
         |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
+        let opcionesFiltrado: RequestOptions = new RequestOptions();
+        opcionesFiltrado.search = filtrarProductos;
+
         return this._http
-                   .get(`${this._backendUri}/products?${ordenarLista}`)
+                   .get(`${this._backendUri}/products`, opcionesFiltrado)
                    .map((data: Response): Product[] => Product.fromJsonToList(data.json()));
     }
 
