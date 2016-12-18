@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
-import { Resolve, ActivatedRouteSnapshot, Router} from "@angular/router";
+import { Resolve, ActivatedRouteSnapshot } from "@angular/router";
 import { Observable } from "rxjs/Observable";
 
 import { Product } from "../models/product";
 import { ProductService } from "./product.service";
 
 @Injectable()
-export class SoldProductsResolve implements Resolve<any> {
+export class SoldProductsResolve implements Resolve<Product[]> {
 
     /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
     | Yellow Path                                                      |
@@ -25,15 +25,9 @@ export class SoldProductsResolve implements Resolve<any> {
     |    ya vendido; quizá te ayude con este punto.                    |
     |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-    constructor(private _productService: ProductService,
-                private _router: Router) { }
+    constructor(private _productService: ProductService) { }
 
-
-    resolve(route: ActivatedRouteSnapshot): Observable<Product[]> {
-        return this._productService.getProducts();
-    }
-
-    botonReset(producto: Product): void {
-        this._router.navigate(["/reset", producto.state]);
+    resolve(ruta: ActivatedRouteSnapshot): Observable<Product[]> {
+        return this._productService.productFilter();
     }
 }
