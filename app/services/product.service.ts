@@ -31,10 +31,6 @@ export class ProductService {
 
         let ordenarLista: string = "_sort=publishedDate&_order=DESC";
 
-        return this._http
-            .get(`${this._backendUri}/products?${ordenarLista}`)
-            .map((data: Response): Product[] => Product.fromJsonToList(data.json()));
-
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
         | Red Path                                                         |
         |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
@@ -51,6 +47,12 @@ export class ProductService {
         |       category.id=x (siendo x el identificador de la categoría)  |
         |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
+        /*let filtrarProductos: string = "_sort=category.id=category&_sort=q=name&_order=DESC";
+
+        return this._http
+                   .get(`${this._backendUri}/products?${filtrarProductos}`)
+                   .map((data: Response): Product[] => Product.fromJsonToList(data.json()));*/
+
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
         | Yellow Path                                                      |
         |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
@@ -66,7 +68,7 @@ export class ProductService {
         |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
         return this._http
-                   .get(`${this._backendUri}/products`)
+                   .get(`${this._backendUri}/products?${ordenarLista}`)
                    .map((data: Response): Product[] => Product.fromJsonToList(data.json()));
     }
 
