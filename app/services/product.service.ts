@@ -6,7 +6,6 @@ import "rxjs/add/operator/map";
 import { Product } from "../models/product";
 import { ProductFilter } from "../models/product-filter";
 import { BackendUri } from "../app.settings";
-import {ProductFilterComponent} from "../components/product-filter/product-filter.component";
 
 @Injectable()
 export class ProductService {
@@ -30,7 +29,9 @@ export class ProductService {
         |   _sort=publishedDate&_order=DESC                                |
         |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-        let ordenarLista: string = "_sort=publishedDate&_order=DESC";
+        let filtrarProductos: URLSearchParams = new URLSearchParams();
+        filtrarProductos.set("_sort", "publishedDate");
+        filtrarProductos.set("_order", "DESC");
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
         | Red Path                                                         |
@@ -48,17 +49,15 @@ export class ProductService {
         |       category.id=x (siendo x el identificador de la categoría)  |
         |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-        let filtrarProductos: URLSearchParams = new URLSearchParams();
+        if (filter) {
+            if (filter.text !== null) {
+                filtrarProductos.set("q", filter.text);
+            }
+            if (filter.category !== null) {
+                filtrarProductos.set("category.id", filter.category);
+            }
+        }
 
-        if (filter.text !== null) {
-            filtrarProductos.set("q", filter.text);
-        }
-        if (filter.category !== null) {
-            filtrarProductos.set("category.id", filter.category);
-        }
-        else {
-           ordenarLista;
-        }
 
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
@@ -74,6 +73,8 @@ export class ProductService {
         |   - Búsqueda por estado:                                         |
         |       state=x (siendo x el estado)                               |
         |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+        // filtrarProductos.set("state", filter.state);
 
         let opcionesFiltrado: RequestOptions = new RequestOptions();
         opcionesFiltrado.search = filtrarProductos;
