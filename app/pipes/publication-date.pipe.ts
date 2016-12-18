@@ -14,6 +14,7 @@ import "moment/locale/es";
 | 'moment(fecha).fromNow()' obtenemos justo lo que necesitamos.    |
 |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
+// Creación del Pipe
 @Pipe({
     name: "PublicationDate"
 })

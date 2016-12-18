@@ -27,6 +27,7 @@ import { UserService } from "./services/user.service";
 | No olvides declarar PublicationDatePipe en el módulo.            |
 |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
+// Declaración PublicationDatePipe
 import { PublicationDatePipe } from "./pipes/publication-date.pipe";
 
 @NgModule({
