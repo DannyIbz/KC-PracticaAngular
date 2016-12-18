@@ -56,8 +56,10 @@ export class ProductService {
             if (filter.category !== null) {
                 filtrarProductos.set("category.id", filter.category);
             }
+            if (filter.state == "sold") {
+                filtrarProductos.set("state", filter.state);
+            }
         }
-
 
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
@@ -74,7 +76,6 @@ export class ProductService {
         |       state=x (siendo x el estado)                               |
         |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-        // filtrarProductos.set("state", filter.state);
 
         let opcionesFiltrado: RequestOptions = new RequestOptions();
         opcionesFiltrado.search = filtrarProductos;
