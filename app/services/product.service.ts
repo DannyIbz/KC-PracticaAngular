@@ -6,6 +6,7 @@ import "rxjs/add/operator/map";
 import { Product } from "../models/product";
 import { ProductFilter } from "../models/product-filter";
 import { BackendUri } from "../app.settings";
+import {filter} from "rxjs/operator/filter";
 
 @Injectable()
 export class ProductService {
@@ -56,9 +57,9 @@ export class ProductService {
             if (filter.category !== null) {
                 filtrarProductos.set("category.id", filter.category);
             }
-            if (filter.state == "sold") {
+            /*if (filter.state === "sold") {
                 filtrarProductos.set("state", filter.state);
-            }
+            }*/
         }
 
 
@@ -83,6 +84,15 @@ export class ProductService {
         return this._http
                    .get(`${this._backendUri}/products`, opcionesFiltrado)
                    .map((data: Response): Product[] => Product.fromJsonToList(data.json()));
+    }
+
+    productFilter(): Observable<Product[]> {
+
+        let filtraEstado: string = "state=sold"
+
+        return this._http
+            .get(`${this._backendUri}/products?${filtraEstado}`)
+            .map((data: Response): Product[] => Product.fromJsonToList(data.json()));
     }
 
     getProduct(productId: number): Observable<Product> {
